@@ -22,7 +22,7 @@ def register(user_register: UserRegister, db: Session = Depends(get_db)):
     existing_email = get_user_by_email(user_register.email, db)
     if existing_username or existing_email:
         raise HTTPException(status_code=409, detail="Invalid credentials")
-    hashed_password = hash_password(user_register.password)
+    hashed_password = hash_password(user_register.password.get_secret_value())
     user = User(username=user_register.username, email=user_register.email, hashed_password=hashed_password)
 
     db.add(user)
@@ -39,7 +39,7 @@ def login(user_login: UserLogin, db: Session = Depends(get_db)):
 
     if not user:
         raise HTTPException(status_code=401, detail="Invalid credentials")
-    if not verify_password(user_login.password, user.hashed_password):
+    if not verify_password(user_login.password.get_secret_value(), user.hashed_password):
         raise HTTPException(status_code=401, detail="Invalid credentials")
     access_token = create_token(user.id)
 
