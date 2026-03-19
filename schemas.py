@@ -8,6 +8,13 @@ class UserRegister(BaseModel):
     username: str
     password: SecretStr
 
+class UserResponse(BaseModel):
+    email: str
+    username: str
+
+    class Config:
+        from_attributes = True
+
 class UserLogin(BaseModel):
     username: str
     password: SecretStr

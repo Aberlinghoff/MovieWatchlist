@@ -9,6 +9,9 @@ from dotenv import load_dotenv
 import os
 from datetime import datetime, timedelta
 
+from sqlalchemy.orm import Session
+
+from models import User
 
 load_dotenv()
 SECRET_KEY = os.getenv('SECRET_KEY')
@@ -34,6 +37,12 @@ def create_token(user_id):
 def decode_token(token):
     try:
         decode = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        return decode["sub"]
+        return decode.get("sub")
     except JWTError:
         return None
+
+def get_user_by_username(username: str, db: Session):
+    return db.query(User).filter(User.username == username).first()
+
+def get_user_by_email(email: str, db: Session):
+    return db.query(User).filter(User.email == email).first()
