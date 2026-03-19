@@ -4,8 +4,6 @@
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from sqlalchemy.sql import crud
-
 from models import User
 from schemas import UserLogin, UserRegister, TokenResponse, UserResponse
 from database import get_db
