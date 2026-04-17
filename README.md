@@ -31,6 +31,8 @@ The Movie Watchlist API allows users to register, log in, search for real movies
 - **httpx** — HTTP client for TMDB API requests
 - **python-dotenv** — environment variable management
 
+  Note on SQLite: SQLite is used here as this project is intended for local use and portfolio demonstration. It is not suitable for production deployment due to limitations around concurrent write access — a real production version would use PostgreSQL instead.
+
 ---
 
 ## Project Structure
