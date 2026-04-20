@@ -31,7 +31,7 @@ The Movie Watchlist API allows users to register, log in, search for real movies
 - **httpx** — HTTP client for TMDB API requests
 - **python-dotenv** — environment variable management
 
-  Note on SQLite: SQLite is used here as this project is intended for local use and portfolio demonstration. It is not suitable for production deployment due to limitations around concurrent write access — a real production version would use PostgreSQL instead.
+> **Note on SQLite:** SQLite is used here as this project is intended for local use and portfolio demonstration. It is not suitable for production deployment due to limitations around concurrent write access — a real production version would use PostgreSQL instead.
 
 ---
 
@@ -43,6 +43,9 @@ MovieWatchlist/
 ├── database.py          # Database connection and session
 ├── models.py            # SQLAlchemy User and Watchlist models
 ├── schemas.py           # Pydantic schemas for validation
+├── requirements.txt     # Pinned project dependencies
+├── .env.example         # Environment variable template
+├── Procfile             # Production server start command
 ├── routers/
 │   ├── auth.py          # Register and login endpoints
 │   ├── movies.py        # Movie search endpoint
@@ -59,26 +62,30 @@ MovieWatchlist/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/MovieWatchlist.git
+git clone https://github.com/Aberlinghoff/MovieWatchlist.git
 cd MovieWatchlist
 ```
 
 ### 2. Create and activate a virtual environment
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
 ### 3. Install dependencies
 
 ```bash
-pip install "fastapi[standard]" sqlalchemy python-jose[cryptography] passlib[bcrypt] bcrypt==4.0.1 httpx python-dotenv
+pip install -r requirements.txt
 ```
 
 ### 4. Create your .env file
 
-Create a `.env` file in the project root with the following values:
+Copy the provided template and fill in your values:
+
+```bash
+cp .env.example .env
+```
 
 ```
 SECRET_KEY=your_random_secret_key_here
@@ -151,4 +158,4 @@ All steps can be tested interactively via the Swagger UI at `/docs`.
 
 ---
 
-> **Note:** Never commit your `.env` file to version control. Ensure `.env` is listed in your `.gitignore`.
+> **Note on secrets:** Never commit your `.env` file to version control. Ensure `.env` is listed in your `.gitignore`. Use `.env.example` as a reference template only.
